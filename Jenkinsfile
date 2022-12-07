@@ -16,10 +16,11 @@ pipeline {
             steps {
                 script {
                     echo "building the Docker image..."
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')])
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh 'docker build -t howthegodschill/demo-app:2.0 .'
                         sh "echo $PASS | docker login -u $USER --password-stdin"
                         sh 'docker push howthegodschill/demo-app:2.0'
+                    }
                 }
             }
         }
